@@ -1,0 +1,40 @@
+{
+  "name": "api",
+  "version": "0.1.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack --port 3001",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@hono/zod-openapi": "^0.19.8",
+    "@repo/auth": "workspace:*",
+    "@repo/db": "workspace:*",
+    "@repo/logger": "workspace:*",
+    "@repo/utils": "workspace:*",
+    "@repo/validators": "workspace:*",
+    "@scalar/hono-api-reference": "^0.9.4",
+    "@t3-oss/env-nextjs": "^0.13.8",
+    "hono": "^4.7.11",
+    "next": "^15.3.3",
+    "pino": "^9.7.0",
+    "pino-loki": "^2.6.0",
+    "postgres": "^3.4.4",
+    "prom-client": "^15.1.3",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "zod": "^3.25.64",
+    "drizzle-orm": "^0.41.0"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "@types/node": "^22.15.3",
+    "@types/react": "19.1.0",
+    "@types/react-dom": "19.1.1",
+    "typescript": "5.8.2"
+  }
+}

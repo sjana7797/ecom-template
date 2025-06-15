@@ -11,10 +11,20 @@
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
+    "@radix-ui/react-slot": "^1.2.3",
+    "@repo/db": "workspace:*",
     "@repo/ui": "workspace:*",
-    "next": "^15.3.0",
+    "@repo/validators": "workspace:*",
+    "@repo/services": "workspace:*",
+    "@repo/auth": "workspace:*",
+    "@tanstack/react-query": "^5.69.0",
+    "@tanstack/react-query-devtools": "^5.80.7",
+    "lucide-react": "^0.475.0",
+    "motion": "^12.18.1",
+    "next": "^15.3.3",
     "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "react-dom": "^19.1.0",
+    "react-use-measure": "^2.1.7"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",

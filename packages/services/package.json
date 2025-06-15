@@ -1,0 +1,22 @@
+{
+  "name": "@repo/services",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.69.0",
+    "@tanstack/react-query-devtools": "^5.80.7",
+    "axios": "^1.10.0",
+    "@repo/utils": "workspace:*",
+    "@repo/validators": "workspace:*"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "@types/node": "^22.15.3",
+    "typescript": "5.8.2"
+  }
+}
