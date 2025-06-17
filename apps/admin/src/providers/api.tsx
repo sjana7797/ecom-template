@@ -7,7 +7,13 @@ type Props = {
   children: React.ReactNode;
 };
 
-const queryClient = new QueryClient({});
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: Infinity,
+    },
+  },
+});
 
 function ApiProvider({ children }: Props) {
   return (

@@ -14,6 +14,7 @@ import {
   Settings2,
   ShoppingCart,
   SquareTerminal,
+  User,
 } from "lucide-react";
 
 import { NavMain } from "~/components/nav-main";
@@ -43,6 +44,22 @@ const data = {
     },
   ],
   navMain: [
+    {
+      title: "Users",
+      url: "#",
+      icon: User,
+      isActive: true,
+      items: [
+        {
+          title: "Add",
+          url: "/user/add",
+        },
+        {
+          title: "All",
+          url: "/user/all",
+        },
+      ],
+    },
     {
       title: "Products",
       url: "#",

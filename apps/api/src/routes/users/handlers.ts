@@ -1,29 +1,14 @@
 import { AppRouteHandler } from "~/types";
 import { ListUsersRoute } from "./routes";
-import { auth } from "@repo/auth";
 import { db } from "@repo/db";
 import { users } from "@repo/db/schema";
 import { createPaginatedResponse } from "@repo/utils/api";
 import * as HttpStatusCodes from "@repo/utils/http/status-codes";
+import { UnauthorizedException } from "~/exceptions/unauthorised";
 
 export const list: AppRouteHandler<ListUsersRoute> = async (c) => {
-  const sessionResult = await auth.api.getSession({
-    headers: c.req.raw.headers,
-  });
-
-  if (!sessionResult) {
-    c.var.logger.error({
-      message: "Unauthorized",
-      err: new Error("Unauthorized"),
-    });
-    return c.json(
-      {
-        message: "Unauthorized" as const,
-      },
-      {
-        status: HttpStatusCodes.UNAUTHORIZED,
-      }
-    );
+  if (!c.var.session) {
+    throw new UnauthorizedException();
   }
 
   const { cursor, limit } = c.req.valid("query");

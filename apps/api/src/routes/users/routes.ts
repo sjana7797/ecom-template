@@ -24,16 +24,6 @@ export const list = createRoute({
         },
       },
     },
-    [HttpStatusCodes.UNAUTHORIZED]: {
-      description: "Unauthorized",
-      content: {
-        "application/json": {
-          schema: z.object({
-            message: z.literal("Unauthorized"),
-          }),
-        },
-      },
-    },
   },
 });
 
