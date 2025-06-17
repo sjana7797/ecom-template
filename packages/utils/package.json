@@ -5,7 +5,8 @@
   "type": "module",
   "exports": {
     "./api": "./src/api/index.ts",
-    "./http/*": "./src/http/*.ts"
+    "./http/*": "./src/http/*.ts",
+    "./uploadthing/*": "./src/uploadthing/*.ts"
   },
   "dependencies": {
     "zod": "^3.25.64"
@@ -14,6 +15,7 @@
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@types/node": "^22.15.3",
-    "typescript": "5.8.2"
+    "typescript": "5.8.2",
+    "@types/react": "19.1.0"
   }
 }

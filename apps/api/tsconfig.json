@@ -1,24 +1,15 @@
 {
-  "extends": "@repo/typescript-config/nextjs.json",
+  "extends": "@repo/typescript-config/base.json",
   "compilerOptions": {
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
+    "module": "esnext",
+    "moduleResolution": "bundler",
     "paths": {
       "~db/*": ["../../packages/db/src/*"],
       "~/*": ["./src/*"]
     }
   },
   "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    "next-env.d.ts",
-    "next.config.js",
-    ".next/types/**/*.ts"
-, "src/env.ts", "../../packages/utils/src/http/http-status-phrases.ts", "../../packages/utils/src/http/http-status-codes.ts"  ],
-  "exclude": [
-    "node_modules"
-  ]
+    "src"
+, "../../packages/utils/src/uploadthing/uploadthing.ts"  ],
+  "exclude": ["node_modules"]
 }

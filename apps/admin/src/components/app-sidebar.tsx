@@ -1,30 +1,32 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 import {
   AudioWaveform,
   BookOpen,
   Bot,
   Command,
+  DollarSign,
   Frame,
   GalleryVerticalEnd,
   Map,
   PieChart,
   Settings2,
+  ShoppingCart,
   SquareTerminal,
-} from "lucide-react"
+} from "lucide-react";
 
-import { NavMain } from "~/components/nav-main"
-import { NavProjects } from "~/components/nav-projects"
-import { NavUser } from "~/components/nav-user"
-import { TeamSwitcher } from "~/components/team-switcher"
+import { NavMain } from "~/components/nav-main";
+import { NavProjects } from "~/components/nav-projects";
+import { NavUser } from "~/components/nav-user";
+import { TeamSwitcher } from "~/components/team-switcher";
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
   SidebarRail,
-} from "@repo/ui/components/sidebar"
+} from "@repo/ui/components/sidebar";
 
 // This is sample data.
 const data = {
@@ -39,77 +41,75 @@ const data = {
       logo: GalleryVerticalEnd,
       plan: "Enterprise",
     },
-    {
-      name: "Acme Corp.",
-      logo: AudioWaveform,
-      plan: "Startup",
-    },
-    {
-      name: "Evil Corp.",
-      logo: Command,
-      plan: "Free",
-    },
   ],
   navMain: [
     {
-      title: "Playground",
+      title: "Products",
       url: "#",
       icon: SquareTerminal,
       isActive: true,
       items: [
         {
-          title: "History",
-          url: "#",
+          title: "Add",
+          url: "/product/add",
         },
         {
-          title: "Starred",
-          url: "#",
-        },
-        {
-          title: "Settings",
-          url: "#",
+          title: "All",
+          url: "/product/all",
         },
       ],
     },
     {
-      title: "Models",
+      title: "Brands",
       url: "#",
-      icon: Bot,
+      icon: SquareTerminal,
+      isActive: true,
       items: [
         {
-          title: "Genesis",
-          url: "#",
+          title: "Add",
+          url: "/brand/add",
         },
         {
-          title: "Explorer",
-          url: "#",
-        },
-        {
-          title: "Quantum",
-          url: "#",
+          title: "All",
+          url: "/brand/all",
         },
       ],
     },
     {
-      title: "Documentation",
+      title: "Categories",
       url: "#",
-      icon: BookOpen,
+      icon: SquareTerminal,
+      isActive: true,
       items: [
         {
-          title: "Introduction",
-          url: "#",
+          title: "Add",
+          url: "/category/add",
         },
         {
-          title: "Get Started",
-          url: "#",
+          title: "All",
+          url: "/category/all",
         },
+      ],
+    },
+    {
+      title: "Orders",
+      url: "#",
+      icon: ShoppingCart,
+      items: [
         {
-          title: "Tutorials",
-          url: "#",
+          title: "All",
+          url: "/order/all",
         },
+      ],
+    },
+    {
+      title: "Transactions",
+      url: "#",
+      icon: DollarSign,
+      items: [
         {
-          title: "Changelog",
-          url: "#",
+          title: "All",
+          url: "/transaction/all",
         },
       ],
     },
@@ -154,7 +154,7 @@ const data = {
       icon: Map,
     },
   ],
-}
+};
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
@@ -171,5 +171,5 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
-  )
+  );
 }

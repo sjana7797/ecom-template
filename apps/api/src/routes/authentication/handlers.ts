@@ -67,6 +67,7 @@ export const login: AppRouteHandler<AuthenticationLoginRoute> = async (c) => {
   const { email, password } = c.req.valid("json");
 
   const { user } = await auth.api.signInEmail({
+    headers: c.req.raw.headers,
     body: {
       email,
       password,

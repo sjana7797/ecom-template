@@ -17,6 +17,7 @@
     "@repo/auth": "workspace:*",
     "@repo/db": "workspace:*",
     "@repo/ui": "workspace:*",
+    "@repo/utils": "workspace:*",
     "@repo/validators": "workspace:*",
     "@repo/services": "workspace:*",
     "@t3-oss/env-nextjs": "^0.13.8",

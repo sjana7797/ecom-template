@@ -9,16 +9,19 @@ export const auth = betterAuth({
     provider: "pg",
     usePlural: true,
   }),
-  plugins: [admin(), openAPI(), nextCookies()],
+  plugins: [admin(), openAPI()],
   emailAndPassword: {
     enabled: true,
   },
+  trustedOrigins: ["http://localhost:3000", "http://localhost:3002"],
   advanced: {
+    crossSubDomainCookies: {
+      enabled: true,
+      domain: "localhost",
+    },
     defaultCookieAttributes: {
+      sameSite: "none",
       secure: true,
-      httpOnly: true,
-
-      sameSite: "none", // Allows CORS-based cookie sharing across subdomains
       partitioned: true, // New browser standards will mandate this for foreign cookies
     },
   },

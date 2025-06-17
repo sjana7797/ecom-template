@@ -74,10 +74,10 @@ export const verifications = pgTable("verifications", {
   value: text("value").notNull(),
   expiresAt: timestamp("expires_at").notNull(),
   createdAt: timestamp("created_at").$defaultFn(
-    () => /* @__PURE__ */ new Date()
+    () => /* @__PURE__ */ new Date(),
   ),
   updatedAt: timestamp("updated_at").$defaultFn(
-    () => /* @__PURE__ */ new Date()
+    () => /* @__PURE__ */ new Date(),
   ),
 });
 
@@ -88,10 +88,13 @@ export const productStatuses = pgEnum("product_statuses", [
 ]);
 
 export const products = pgTable("products", {
-  id: uuid("id").primaryKey(),
+  id: uuid("id").primaryKey().defaultRandom(),
   name: text("name").notNull(),
   slug: text("slug").notNull().unique(),
-  sku: integer("sku").notNull().unique(),
+  sku: text("sku")
+    .notNull()
+    .unique()
+    .references(() => productSkus.sku),
   brandId: uuid("brand_id")
     .notNull()
     .references(() => brands.id),
@@ -101,34 +104,37 @@ export const products = pgTable("products", {
   costPrice: decimal("cost_price").notNull(),
   salePrice: decimal("sale_price").notNull(),
   createdAt: timestamp("created_at").$defaultFn(
-    () => /* @__PURE__ */ new Date()
+    () => /* @__PURE__ */ new Date(),
   ),
   updatedAt: timestamp("updated_at").$defaultFn(
-    () => /* @__PURE__ */ new Date()
+    () => /* @__PURE__ */ new Date(),
   ),
 });
 
 export const categories = pgTable("categories", {
-  id: uuid("id").primaryKey(),
+  id: uuid("id").primaryKey().defaultRandom(),
   name: text("name").notNull(),
   slug: text("slug").notNull().unique(),
   status: productStatuses("status").default("draft"),
+  image: uuid("image")
+    .notNull()
+    .references(() => images.id),
   createdAt: timestamp("created_at").$defaultFn(
-    () => /* @__PURE__ */ new Date()
+    () => /* @__PURE__ */ new Date(),
   ),
   updatedAt: timestamp("updated_at").$defaultFn(
-    () => /* @__PURE__ */ new Date()
+    () => /* @__PURE__ */ new Date(),
   ),
 });
 
 export const images = pgTable("images", {
-  id: uuid("id").primaryKey(),
+  id: uuid("id").primaryKey().defaultRandom(),
   url: text("url").notNull(),
   createdAt: timestamp("created_at").$defaultFn(
-    () => /* @__PURE__ */ new Date()
+    () => /* @__PURE__ */ new Date(),
   ),
   updatedAt: timestamp("updated_at").$defaultFn(
-    () => /* @__PURE__ */ new Date()
+    () => /* @__PURE__ */ new Date(),
   ),
 });
 
@@ -138,29 +144,32 @@ export const productCategories = pgTable(
     productId: uuid("product_id").notNull(),
     categoryId: uuid("category_id").notNull(),
     createdAt: timestamp("created_at").$defaultFn(
-      () => /* @__PURE__ */ new Date()
+      () => /* @__PURE__ */ new Date(),
     ),
     updatedAt: timestamp("updated_at").$defaultFn(
-      () => /* @__PURE__ */ new Date()
+      () => /* @__PURE__ */ new Date(),
     ),
   },
   (t) => [
     primaryKey({
       columns: [t.productId, t.categoryId],
     }),
-  ]
+  ],
 );
 
 export const brands = pgTable("brands", {
-  id: uuid("id").primaryKey(),
+  id: uuid("id").primaryKey().defaultRandom(),
   name: text("name").notNull(),
   slug: text("slug").notNull().unique(),
   status: productStatuses("status").default("draft"),
+  image: uuid("image")
+    .notNull()
+    .references(() => images.id),
   createdAt: timestamp("created_at").$defaultFn(
-    () => /* @__PURE__ */ new Date()
+    () => /* @__PURE__ */ new Date(),
   ),
   updatedAt: timestamp("updated_at").$defaultFn(
-    () => /* @__PURE__ */ new Date()
+    () => /* @__PURE__ */ new Date(),
   ),
 });
 
@@ -176,7 +185,7 @@ export const ordersStatuses = pgEnum("orders_statuses", [
 ]);
 
 export const orders = pgTable("orders", {
-  id: uuid("id").primaryKey(),
+  id: uuid("id").primaryKey().defaultRandom(),
   userId: uuid("user_id").notNull(),
   status: text("status").notNull(),
   totalPrice: decimal("total_price").notNull(),
@@ -185,15 +194,15 @@ export const orders = pgTable("orders", {
     .references(() => carts.id),
   couponId: uuid("coupon_id").references(() => coupons.id),
   createdAt: timestamp("created_at").$defaultFn(
-    () => /* @__PURE__ */ new Date()
+    () => /* @__PURE__ */ new Date(),
   ),
   updatedAt: timestamp("updated_at").$defaultFn(
-    () => /* @__PURE__ */ new Date()
+    () => /* @__PURE__ */ new Date(),
   ),
 });
 
 export const orderItems = pgTable("order_items", {
-  id: uuid("id").primaryKey(),
+  id: uuid("id").primaryKey().defaultRandom(),
   status: ordersStatuses("status").notNull(),
   orderId: uuid("order_id")
     .notNull()
@@ -205,10 +214,10 @@ export const orderItems = pgTable("order_items", {
   price: decimal("price").notNull(),
   discount: decimal("discount").notNull().default("0"),
   createdAt: timestamp("created_at").$defaultFn(
-    () => /* @__PURE__ */ new Date()
+    () => /* @__PURE__ */ new Date(),
   ),
   updatedAt: timestamp("updated_at").$defaultFn(
-    () => /* @__PURE__ */ new Date()
+    () => /* @__PURE__ */ new Date(),
   ),
 });
 
@@ -222,7 +231,7 @@ export const transactionsStatuses = pgEnum("transactions_statuses", [
 ]);
 
 export const transactions = pgTable("transactions", {
-  id: uuid("id").primaryKey(),
+  id: uuid("id").primaryKey().defaultRandom(),
   orderId: uuid("order_id")
     .notNull()
     .references(() => orders.id),
@@ -230,15 +239,15 @@ export const transactions = pgTable("transactions", {
   status: transactionsStatuses("status").notNull(),
   externalId: text("external_id").notNull(),
   createdAt: timestamp("created_at").$defaultFn(
-    () => /* @__PURE__ */ new Date()
+    () => /* @__PURE__ */ new Date(),
   ),
   updatedAt: timestamp("updated_at").$defaultFn(
-    () => /* @__PURE__ */ new Date()
+    () => /* @__PURE__ */ new Date(),
   ),
 });
 
 export const transactionItems = pgTable("transaction_items", {
-  id: uuid("id").primaryKey(),
+  id: uuid("id").primaryKey().defaultRandom(),
   transactionId: uuid("transaction_id")
     .notNull()
     .references(() => transactions.id),
@@ -247,28 +256,28 @@ export const transactionItems = pgTable("transaction_items", {
     .references(() => orderItems.id),
   status: transactionsStatuses("status").notNull(),
   createdAt: timestamp("created_at").$defaultFn(
-    () => /* @__PURE__ */ new Date()
+    () => /* @__PURE__ */ new Date(),
   ),
   updatedAt: timestamp("updated_at").$defaultFn(
-    () => /* @__PURE__ */ new Date()
+    () => /* @__PURE__ */ new Date(),
   ),
 });
 
 export const carts = pgTable("carts", {
-  id: uuid("id").primaryKey(),
+  id: uuid("id").primaryKey().defaultRandom(),
   userId: uuid("user_id").notNull(),
   isDeleted: boolean("is_deleted").default(false),
   amount: decimal("amount").notNull(),
   createdAt: timestamp("created_at").$defaultFn(
-    () => /* @__PURE__ */ new Date()
+    () => /* @__PURE__ */ new Date(),
   ),
   updatedAt: timestamp("updated_at").$defaultFn(
-    () => /* @__PURE__ */ new Date()
+    () => /* @__PURE__ */ new Date(),
   ),
 });
 
 export const cartItems = pgTable("cart_items", {
-  id: uuid("id").primaryKey(),
+  id: uuid("id").primaryKey().defaultRandom(),
   cartId: uuid("cart_id")
     .notNull()
     .references(() => carts.id),
@@ -278,27 +287,27 @@ export const cartItems = pgTable("cart_items", {
   quantity: integer("quantity").notNull(),
   price: decimal("price").notNull(),
   createdAt: timestamp("created_at").$defaultFn(
-    () => /* @__PURE__ */ new Date()
+    () => /* @__PURE__ */ new Date(),
   ),
   updatedAt: timestamp("updated_at").$defaultFn(
-    () => /* @__PURE__ */ new Date()
+    () => /* @__PURE__ */ new Date(),
   ),
 });
 
 export const wishlists = pgTable("wishlists", {
-  id: uuid("id").primaryKey(),
+  id: uuid("id").primaryKey().defaultRandom(),
   userId: uuid("user_id").notNull(),
   isDeleted: boolean("is_deleted").default(false),
   createdAt: timestamp("created_at").$defaultFn(
-    () => /* @__PURE__ */ new Date()
+    () => /* @__PURE__ */ new Date(),
   ),
   updatedAt: timestamp("updated_at").$defaultFn(
-    () => /* @__PURE__ */ new Date()
+    () => /* @__PURE__ */ new Date(),
   ),
 });
 
 export const wishlistItems = pgTable("wishlist_items", {
-  id: uuid("id").primaryKey(),
+  id: uuid("id").primaryKey().defaultRandom(),
   wishlistId: uuid("wishlist_id")
     .notNull()
     .references(() => wishlists.id),
@@ -306,37 +315,47 @@ export const wishlistItems = pgTable("wishlist_items", {
     .notNull()
     .references(() => products.id),
   createdAt: timestamp("created_at").$defaultFn(
-    () => /* @__PURE__ */ new Date()
+    () => /* @__PURE__ */ new Date(),
   ),
   updatedAt: timestamp("updated_at").$defaultFn(
-    () => /* @__PURE__ */ new Date()
+    () => /* @__PURE__ */ new Date(),
   ),
 });
 
 export const coupons = pgTable("coupons", {
-  id: uuid("id").primaryKey(),
+  id: uuid("id").primaryKey().defaultRandom(),
   code: text("code").notNull(),
   discount: decimal("discount").notNull(),
   maxDiscount: decimal("max_discount").notNull(),
   expiresAt: timestamp("expires_at").notNull(),
   createdAt: timestamp("created_at").$defaultFn(
-    () => /* @__PURE__ */ new Date()
+    () => /* @__PURE__ */ new Date(),
   ),
   updatedAt: timestamp("updated_at").$defaultFn(
-    () => /* @__PURE__ */ new Date()
+    () => /* @__PURE__ */ new Date(),
   ),
 });
 
 export const seo = pgTable("seo", {
-  id: uuid("id").primaryKey(),
+  id: uuid("id").primaryKey().defaultRandom(),
   title: text("title").notNull(),
   description: text("description").notNull(),
   image: text("image").notNull(),
   url: text("url").notNull().unique(),
   createdAt: timestamp("created_at").$defaultFn(
-    () => /* @__PURE__ */ new Date()
+    () => /* @__PURE__ */ new Date(),
   ),
   updatedAt: timestamp("updated_at").$defaultFn(
-    () => /* @__PURE__ */ new Date()
+    () => /* @__PURE__ */ new Date(),
+  ),
+});
+
+export const productSkus = pgTable("product_skus", {
+  sku: text("sku").primaryKey(),
+  createdAt: timestamp("created_at").$defaultFn(
+    () => /* @__PURE__ */ new Date(),
+  ),
+  updatedAt: timestamp("updated_at").$defaultFn(
+    () => /* @__PURE__ */ new Date(),
   ),
 });

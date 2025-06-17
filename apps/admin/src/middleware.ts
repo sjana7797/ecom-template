@@ -19,8 +19,6 @@ export async function middleware(request: NextRequest) {
     }
   );
 
-  console.log({ session, p: request.nextUrl, s: env.BETTER_AUTH_URL });
-
   if (!session && !publicPages.includes(request.nextUrl.pathname)) {
     return NextResponse.redirect(new URL(AUTH_PAGES.SIGN_IN, request.url));
   }

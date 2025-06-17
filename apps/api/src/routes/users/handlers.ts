@@ -1,20 +1,18 @@
 import { AppRouteHandler } from "~/types";
 import { ListUsersRoute } from "./routes";
 import { auth } from "@repo/auth";
-import { headers } from "next/headers";
 import { db } from "@repo/db";
 import { users } from "@repo/db/schema";
 import { createPaginatedResponse } from "@repo/utils/api";
 import * as HttpStatusCodes from "@repo/utils/http/status-codes";
 
 export const list: AppRouteHandler<ListUsersRoute> = async (c) => {
-  const headersData = await headers();
   const sessionResult = await auth.api.getSession({
-    headers: headersData,
+    headers: c.req.raw.headers,
   });
 
   if (!sessionResult) {
-    globalThis.logger.error({
+    c.var.logger.error({
       message: "Unauthorized",
       err: new Error("Unauthorized"),
     });

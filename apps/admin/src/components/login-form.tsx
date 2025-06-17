@@ -17,7 +17,7 @@ import { toast } from "@repo/ui/lib/sonner";
 import { useRouter } from "next/navigation";
 import { authClient } from "@repo/auth/client";
 import { ADMIN_PAGES } from "~/constants/routes";
-import { api } from "@repo/services";
+import { useTransition } from "react";
 
 export function LoginForm({
   className,
@@ -27,22 +27,28 @@ export function LoginForm({
     resolver: zodResolver(loginSchema),
   });
 
-  const { mutateAsync: loginMutate, isPending } =
-    api.authService.login.useMutation({
-      onSuccess: () => {
-        // Redirect to login page
-        router.push(ADMIN_PAGES.DASHBOARD);
-        toast.success("User Signed In");
-      },
-      onError(error) {
-        toast.error(error.message);
-      },
-    });
+  const [isPending, startTransition] = useTransition();
 
   const router = useRouter();
 
   const onSubmit = async (values: LoginFormSchema) => {
-    const { success } = await loginMutate(values);
+    startTransition(async () => {
+      try {
+        const { error } = await authClient.signIn.email(values);
+        if (error) {
+          throw error;
+        }
+        router.push(ADMIN_PAGES.DASHBOARD);
+        toast.success("User Signed In");
+      } catch (error) {
+        let errorMessage = "Something went wrong";
+        console.log({ error });
+        if (error instanceof Error) {
+          errorMessage = error.message;
+        }
+        toast.error(errorMessage);
+      }
+    });
   };
 
   return (

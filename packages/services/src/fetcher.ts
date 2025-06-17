@@ -1,9 +1,9 @@
-import axios, { AxiosError } from "axios";
+import axios, { AxiosError, Method } from "axios";
 import * as HttpStatusCodes from "@repo/utils/http/status-codes";
 import * as HttpStatusPhrases from "@repo/utils/http/status-phrases";
 
 const client = axios.create({
-  baseURL: "/api",
+  baseURL: `${process.env.NEXT_PUBLIC_API_URL}/api`,
   withCredentials: true,
 });
 
@@ -59,15 +59,34 @@ export const fetcher = async <Params, ResponseData>({
 type MutatorOptions<RequestBody> = {
   body: RequestBody;
   url: string;
+  method?: Method;
 };
 
 export const mutator = async <RequestBody, ResponseData>({
   body,
   url,
+  method = "POST",
 }: MutatorOptions<RequestBody>): Promise<APIResponse<ResponseData>> => {
   try {
-    const response = await client.post<ResponseData>(url, body);
+    const response = await client<ResponseData>(url, {
+      data: body,
+      method,
+    });
 
+    // const response = await fetch(
+    //   `${process.env.NEXT_PUBLIC_API_URL}/api${url}`,
+    //   {
+    //     method,
+    //     body: JSON.stringify(body),
+    //     credentials: "include",
+    //   }
+    // );
+
+    // const data = await response.json();
+
+    console.log({
+      response,
+    });
     return {
       data: response.data,
       status: response.status,

@@ -1,7 +1,7 @@
 # Configuration for scraping metrics from different targets
 scrape_configs:
   # Job for collecting metrics from Next.js application
-  - job_name: "next-api"
+  - job_name: "api"
     # Static list of target endpoints to scrape
     static_configs:
       # Using host.docker.internal to access host machine from Docker container
